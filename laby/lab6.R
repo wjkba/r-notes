@@ -47,3 +47,41 @@ cprop(table(liderzy$z1.wiedza.dziedzinowa))
 print(cprop(table(liderzy$z1.wiedza.dziedzinowa, liderzy$staz2), total=F), width=120)
 
 KendallTauB(table(liderzy$z1.wiedza.dziedzinowa, liderzy$staz2),conf.level = 0.95)
+
+
+# Wykres
+wykres1 <- as.data.frame(cprop(table(liderzy$z1.wiedza.dziedzinowa, liderzy$plec)))
+view(wykres1)
+
+wykres1 %>%
+  ggplot(aes(x=Var1, y=Freq, fill=Var2))+
+  geom_bar(stat="identity", position = "dodge")
+
+
+wykres1 %>% 
+  ggplot(aes(x=Var1, y=Freq, fill=Var2))+
+  geom_bar(stat="identity", position = "dodge")+
+  scale_x_discrete(limits=rev)+
+  coord_flip()
+
+wykres1 %>% 
+  filter(Var1!="Total") %>% # wyrzucamy totala
+  ggplot(aes(x=Var1, y=Freq, fill=Var2))+
+  geom_bar(stat="identity", position = "dodge")+
+  scale_x_discrete(limits=rev)+
+  coord_flip()
+
+wykres1 %>% 
+  filter(Var1!="Total" &Var2!="All") %>% # wyrzucamy all
+  ggplot(aes(x=Var1, y=Freq, fill=Var2))+
+  geom_bar(stat="identity", position = "fill")+ # inna pozycja
+  xlab("Ważność")+
+  ylab("Procenty")+
+  scale_x_discrete(limits=rev)+
+  coord_flip()
+
+
+
+
+
+
